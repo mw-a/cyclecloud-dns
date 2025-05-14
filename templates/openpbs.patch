@@ -1,0 +1,43 @@
+From 55e11d3164bf4580e22f344ff08b24af697ccbc2 Mon Sep 17 00:00:00 2001
+From: Michael Weiser <michael.weiser@eviden.com>
+Date: Tue, 13 May 2025 15:30:19 +0200
+Subject: [PATCH 1/2] DNS parameters
+
+---
+ templates/openpbs.txt | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/templates/openpbs.txt b/templates/openpbs.txt
+index 96660ec..16b5798 100644
+--- a/templates/openpbs.txt
++++ b/templates/openpbs.txt
+@@ -29,6 +29,9 @@ Autoscale = $Autoscale
+         cyclecloud.hosts.standalone_dns.enabled = ${NodeNameIsHostname==false}
+         cyclecloud.hosts.simple_vpc_dns.enabled = ${NodeNameIsHostname==false}
+ 
++        dns.servers=$dns_servers
++        dns.search_list=$dns_search_list
++
+         # For fast spin-up after Deallocate, force an immediate re-converge on boot
+         cyclecloud.converge_on_boot = true
+ 
+@@ -251,6 +254,16 @@ Order = 10
+         ParameterType = Azure.Subnet
+         Required = True
+ 
++        [[[parameter dns_servers]]]
++        Label = DNS Servers
++        Description = space-separated DNS server list
++        DefaultValue = ""
++
++        [[[parameter dns_search_list]]]
++        Label = Search list
++        Description = comma-separated DNS search list
++        DefaultValue = ""
++
+ [parameters Network Attached Storage]
+ Order = 15
+ 
+-- 
+2.47.2
+
