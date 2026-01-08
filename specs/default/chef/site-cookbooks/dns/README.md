@@ -1,4 +1,4 @@
-# local\_node
+# dns
 
 TODO: Enter the cookbook description here.
 
