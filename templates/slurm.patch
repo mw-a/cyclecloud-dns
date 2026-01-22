@@ -1,0 +1,53 @@
+From 67b69b6101476b2fa8d4d31d5a9b00a20a00e937 Mon Sep 17 00:00:00 2001
+From: Michael Weiser <michael.weiser@gmx.de>
+Date: Thu, 22 Jan 2026 09:33:53 +0100
+Subject: [PATCH] DNS parameters
+
+---
+ templates/slurm.txt | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/templates/slurm.txt b/templates/slurm.txt
+index 1d618e6..3837527 100644
+--- a/templates/slurm.txt
++++ b/templates/slurm.txt
+@@ -48,6 +48,11 @@ Autoscale = $Autoscale
+         cyclecloud.hosts.standalone_dns.enabled = ${NodeNameIsHostname==false}
+         cyclecloud.hosts.simple_vpc_dns.enabled = ${NodeNameIsHostname==false}
+ 
++        dns.servers=$dns_servers
++        dns.search_list=$dns_search_list
++        dns.trim_domains=$dns_trim_domains
++        dns.update_reverse_zone_id=$dns_update_reverse_zone_id
++
+         # For fast spin-up after Deallocate, force an immediate re-converge on boot
+         cyclecloud.converge_on_boot = true
+ 
+@@ -490,6 +495,27 @@ Order = 10
+         ParameterType = Azure.Subnet
+         Required = True
+ 
++        [[[parameter dns_servers]]]
++        Label = DNS Servers
++        Description = space-separated DNS server list
++        DefaultValue = ""
++
++        [[[parameter dns_search_list]]]
++        Label = Search list
++        Description = comma-separated DNS search list
++        DefaultValue = ""
++
++        [[[parameter dns_trim_domains]]]
++        Label = Trim domains
++        Description =  Trim domain names from reverse lookups
++        DefaultValue = False
++        ParameterType = Boolean
++
++        [[[parameter dns_update_reverse_zone_id]]]
++        Label = Reverse lookup zone ID
++        Description = Resource ID of reverse lookup zone for PTR record update
++        DefaultValue = ""
++
+     [[parameters High Availability]]
+     Order = 50
+     Description = "Slurm can be setup in HA mode - where slurmctld is running on two nodes with failover. Note that checking this box will require an external NFS, so any reference to the 'builtin' NFS will be hidden."
